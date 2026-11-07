@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Momoko's Game Center 🎮</title>
+    <title data-i18n="title">Momoko's Game Center 🎮</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Bubblegum+Sans&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -360,6 +360,76 @@
             letter-spacing: 0.5px;
         }
 
+        /* Language switch (flags) */
+        .lang-switch {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 20;
+            display: inline-flex;
+            gap: 4px;
+            padding: 4px;
+            border-radius: 999px;
+            background: rgba(20, 16, 40, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.4rem 0.8rem 0.4rem 0.5rem;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lang-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn[aria-pressed="true"] {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(255, 110, 199, 0.85), rgba(167, 139, 250, 0.85));
+            box-shadow: 0 0 18px rgba(255, 110, 199, 0.45);
+        }
+
+        .lang-btn:focus-visible {
+            outline: 2px solid #ffd166;
+            outline-offset: 2px;
+        }
+
+        .lang-btn svg {
+            width: 26px;
+            height: 18px;
+            border-radius: 3px;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+            flex: none;
+        }
+
+        .lang-btn:hover svg,
+        .lang-btn[aria-pressed="true"] svg {
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 480px) {
+            .lang-switch { top: 0.6rem; right: 0.6rem; }
+            .lang-btn { padding: 0.35rem 0.5rem; }
+            .lang-btn .lang-name { display: none; }
+        }
+
         /* Reduce motion for accessibility */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -373,9 +443,39 @@
 <body>
     <div class="particles" id="particles" aria-hidden="true"></div>
 
+    <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true" lang="en" title="English">
+            <svg viewBox="0 0 26 18" aria-hidden="true" focusable="false">
+                <rect width="26" height="18" fill="#fff"/>
+                <g fill="#B22234">
+                    <rect y="0" width="26" height="1.385"/><rect y="2.77" width="26" height="1.385"/>
+                    <rect y="5.54" width="26" height="1.385"/><rect y="8.31" width="26" height="1.385"/>
+                    <rect y="11.08" width="26" height="1.385"/><rect y="13.85" width="26" height="1.385"/>
+                    <rect y="16.62" width="26" height="1.385"/>
+                </g>
+                <rect width="11.2" height="9.7" fill="#3C3B6E"/>
+                <g fill="#fff">
+                    <circle cx="1.6" cy="1.5" r="0.55"/><circle cx="4.1" cy="1.5" r="0.55"/><circle cx="6.6" cy="1.5" r="0.55"/><circle cx="9.1" cy="1.5" r="0.55"/>
+                    <circle cx="2.85" cy="3.1" r="0.55"/><circle cx="5.35" cy="3.1" r="0.55"/><circle cx="7.85" cy="3.1" r="0.55"/>
+                    <circle cx="1.6" cy="4.7" r="0.55"/><circle cx="4.1" cy="4.7" r="0.55"/><circle cx="6.6" cy="4.7" r="0.55"/><circle cx="9.1" cy="4.7" r="0.55"/>
+                    <circle cx="2.85" cy="6.3" r="0.55"/><circle cx="5.35" cy="6.3" r="0.55"/><circle cx="7.85" cy="6.3" r="0.55"/>
+                    <circle cx="1.6" cy="7.9" r="0.55"/><circle cx="4.1" cy="7.9" r="0.55"/><circle cx="6.6" cy="7.9" r="0.55"/><circle cx="9.1" cy="7.9" r="0.55"/>
+                </g>
+            </svg>
+            <span class="lang-name">English</span>
+        </button>
+        <button type="button" class="lang-btn" data-lang="ja" aria-pressed="false" lang="ja" title="日本語">
+            <svg viewBox="0 0 26 18" aria-hidden="true" focusable="false">
+                <rect width="26" height="18" fill="#fff"/>
+                <circle cx="13" cy="9" r="5.4" fill="#BC002D"/>
+            </svg>
+            <span class="lang-name">日本語</span>
+        </button>
+    </div>
+
     <header>
-        <h1>Momoko's Game Center 🎮</h1>
-        <p class="subtitle">Choose your adventure!</p>
+        <h1 data-i18n="title">Momoko's Game Center 🎮</h1>
+        <p class="subtitle" data-i18n="subtitle">Choose your adventure!</p>
     </header>
 
     <main>
@@ -385,62 +485,62 @@
             <a href="https://ruck314.github.io/momokos-underwater-world/" class="game-card card-ocean">
                 <div>
                     <div class="card-emoji">🌊🐠🐙</div>
-                    <h2 class="card-title">Momoko's Underwater World 🐠</h2>
-                    <p class="card-description">Dive deep into the ocean and explore Momoko's underwater kingdom!</p>
+                    <h2 class="card-title" data-i18n="uw_title">Momoko's Underwater World 🐠</h2>
+                    <p class="card-description" data-i18n="uw_desc">Dive deep into the ocean and explore Momoko's underwater kingdom!</p>
                 </div>
-                <span class="card-cta">Play Now</span>
+                <span class="card-cta" data-i18n="play">Play Now</span>
             </a>
 
             <a href="https://ruck314.github.io/momoko-in-space/" class="game-card card-space">
                 <div>
                     <div class="card-emoji">🚀⭐👾</div>
-                    <h2 class="card-title">Momoko in Space! 🚀</h2>
-                    <p class="card-description">Blast off to the stars and explore the cosmos with Momoko!</p>
+                    <h2 class="card-title" data-i18n="sp_title">Momoko in Space! 🚀</h2>
+                    <p class="card-description" data-i18n="sp_desc">Blast off to the stars and explore the cosmos with Momoko!</p>
                 </div>
-                <span class="card-cta">Play Now</span>
+                <span class="card-cta" data-i18n="play">Play Now</span>
             </a>
 
             <a href="https://ruck314.github.io/momoko-animal-hotel-zoo/" class="game-card card-animal">
                 <div>
                     <div class="card-emoji">🏨🦁🐘</div>
-                    <h2 class="card-title">Momoko Animal Hotel Zoo 🦁</h2>
-                    <p class="card-description">Check into a cozy hotel where every guest is a different animal!</p>
+                    <h2 class="card-title" data-i18n="hz_title">Momoko Animal Hotel Zoo 🦁</h2>
+                    <p class="card-description" data-i18n="hz_desc">Check into a cozy hotel where every guest is a different animal!</p>
                 </div>
-                <span class="card-cta">Play Now</span>
+                <span class="card-cta" data-i18n="play">Play Now</span>
             </a>
 
             <a href="https://ruck314.github.io/momoko-treehouse/" class="game-card card-treehouse">
                 <div>
                     <div class="card-emoji">🌳🏠🎹</div>
-                    <h2 class="card-title">Momoko and Friends Tree House 🌳</h2>
-                    <p class="card-description">Carry planks home from the shop, build a tree house branch by branch, and play the piano upstairs!</p>
+                    <h2 class="card-title" data-i18n="th_title">Momoko and Friends Tree House 🌳</h2>
+                    <p class="card-description" data-i18n="th_desc">Carry planks home from the shop, build a tree house branch by branch, and play the piano upstairs!</p>
                 </div>
-                <span class="card-cta">Play Now</span>
+                <span class="card-cta" data-i18n="play">Play Now</span>
             </a>
 
             <a href="https://ruck314.github.io/momoko-dress-up/" class="game-card card-dressup">
                 <div>
                     <div class="card-emoji">👗👠👜</div>
-                    <h2 class="card-title">Momoko and Friends Dress Up 👗</h2>
-                    <p class="card-description">Pick hair, dresses, hats, bags and shoes at every station in the studio, then strut down the runway!</p>
+                    <h2 class="card-title" data-i18n="du_title">Momoko and Friends Dress Up 👗</h2>
+                    <p class="card-description" data-i18n="du_desc">Pick hair, dresses, hats, bags and shoes at every station in the studio, then strut down the runway!</p>
                 </div>
-                <span class="card-cta">Play Now</span>
+                <span class="card-cta" data-i18n="play">Play Now</span>
             </a>
 
             <div class="game-card card-coming-soon" aria-disabled="true">
                 <div>
                     <div class="card-emoji">❓❓❓</div>
                     <h2 class="card-title">???</h2>
-                    <p class="card-description">A new adventure is being dreamed up. Check back soon!</p>
+                    <p class="card-description" data-i18n="soon_desc">A new adventure is being dreamed up. Check back soon!</p>
                 </div>
-                <span class="card-cta">Coming Soon</span>
+                <span class="card-cta" data-i18n="soon_cta">Coming Soon</span>
             </div>
         </div>
     </main>
 
     <footer>
-        <p class="footer-main">Made with <span class="heart">❤️</span> for Momoko</p>
-        <p class="footer-sub">More games coming soon!</p>
+        <p class="footer-main"><span data-i18n="footer_pre">Made with</span> <span class="heart">❤️</span> <span data-i18n="footer_post">for Momoko</span></p>
+        <p class="footer-sub" data-i18n="footer_sub">More games coming soon!</p>
     </footer>
 
     <script>
@@ -476,6 +576,79 @@
 
                 container.appendChild(p);
             }
+        })();
+
+        // Language switch: English (default) / Japanese, remembered per browser
+        (function setupLanguage() {
+            const STRINGS = {
+                en: {
+                    title: "Momoko's Game Center 🎮",
+                    subtitle: 'Choose your adventure!',
+                    play: 'Play Now',
+                    uw_title: "Momoko's Underwater World 🐠",
+                    uw_desc: "Dive deep into the ocean and explore Momoko's underwater kingdom!",
+                    sp_title: 'Momoko in Space! 🚀',
+                    sp_desc: 'Blast off to the stars and explore the cosmos with Momoko!',
+                    hz_title: 'Momoko Animal Hotel Zoo 🦁',
+                    hz_desc: 'Check into a cozy hotel where every guest is a different animal!',
+                    th_title: 'Momoko and Friends Tree House 🌳',
+                    th_desc: 'Carry planks home from the shop, build a tree house branch by branch, and play the piano upstairs!',
+                    du_title: 'Momoko and Friends Dress Up 👗',
+                    du_desc: 'Pick hair, dresses, hats, bags and shoes at every station in the studio, then strut down the runway!',
+                    soon_desc: 'A new adventure is being dreamed up. Check back soon!',
+                    soon_cta: 'Coming Soon',
+                    footer_pre: 'Made with',
+                    footer_post: 'for Momoko',
+                    footer_sub: 'More games coming soon!',
+                },
+                ja: {
+                    title: 'ももこの ゲームセンター 🎮',
+                    subtitle: 'あそびたい ゲームを えらんでね！',
+                    play: 'あそぶ',
+                    uw_title: 'ももこの うみの せかい 🐠',
+                    uw_desc: 'ふかい うみに もぐって、ももこの うみの おうこくを たんけんしよう！',
+                    sp_title: 'ももこ うちゅうへ！ 🚀',
+                    sp_desc: 'ロケットで ほしの むこうへ！ ももこと うちゅうを たんけんしよう！',
+                    hz_title: 'ももこの どうぶつホテル 🦁',
+                    hz_desc: 'おきゃくさまは みんな どうぶつ！ すてきな ホテルに チェックインしよう！',
+                    th_title: 'ももこと なかまたちの ツリーハウス 🌳',
+                    th_desc: 'おみせから いたを はこんで、ツリーハウスを つくろう。2かいでは ピアノも ひけるよ！',
+                    du_title: 'ももこと なかまたちの おしゃれ ドレスアップ 👗',
+                    du_desc: 'スタジオで かみがた・ドレス・ぼうし・バッグ・くつを えらんで、ランウェイを あるこう！',
+                    soon_desc: 'あたらしい ぼうけんを じゅんびちゅう。おたのしみに！',
+                    soon_cta: 'ちかじか こうかい',
+                    footer_pre: 'ももこのために',
+                    footer_post: 'をこめて つくりました',
+                    footer_sub: 'あたらしい ゲームも もうすぐ！',
+                },
+            };
+            const KEY = 'momoko-hub-lang';
+            const buttons = document.querySelectorAll('.lang-btn');
+
+            function apply(lang) {
+                const table = STRINGS[lang] || STRINGS.en;
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    const text = table[el.getAttribute('data-i18n')];
+                    if (text !== undefined) el.textContent = text;
+                });
+                document.documentElement.lang = lang;
+                buttons.forEach(function (b) {
+                    b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false');
+                });
+            }
+
+            let saved = null;
+            try { saved = localStorage.getItem(KEY); } catch (e) { /* storage blocked */ }
+            const initial = STRINGS[saved] ? saved : 'en';
+            if (initial !== 'en') apply(initial);
+
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    const lang = b.dataset.lang;
+                    apply(lang);
+                    try { localStorage.setItem(KEY, lang); } catch (e) { /* ignore */ }
+                });
+            });
         })();
     </script>
 </body>
